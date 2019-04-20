@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import auth
 from django.contrib.auth.models import User
+# from django.contrib.auth.decorators import login_required
 
 def signup(request):
     if request.method == 'POST':
@@ -21,7 +22,6 @@ def login(request):
     if request.method == 'POST':
         username = get_object_or_404(User, email=request.POST['email']).username
         user = auth.authenticate(username=username, password=request.POST['password'])
-        print(user)
         if user is not None:
             auth.login(request, user)
             return redirect('home')

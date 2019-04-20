@@ -3,8 +3,10 @@ from .models import Todo
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
+@login_required(login_url='/accounts/login')
 def index(request):
-    todos = Todo.objects
+    todos = Todo.objects.filter(creater=request.user)
+    # todos = Todo.objects
     return render(request, 'App/index.html', {'todos': todos})
 
 @login_required(login_url='/accounts/login')
@@ -24,12 +26,12 @@ def create(request):
     else:
         return render(request, 'App/create.html')
 
-@login_required(login_url="accounts/login")
+@login_required(login_url="/accounts/login")
 def edit(request, todo_id):
     todo = get_object_or_404(Todo, pk=todo_id)
     return render(request, 'App/edit.html', {'todo': todo})
 
-@login_required(login_url="accounts/login")
+@login_required(login_url="/accounts/login")
 def delete_task(request, todo_id):
     if request.method == "POST":
         # todo = Todo.objects.get(pk=todo_id)
@@ -37,7 +39,7 @@ def delete_task(request, todo_id):
         todo.delete()
         return redirect('home')
 
-@login_required(login_url="accounts/login")
+@login_required(login_url="/accounts/login")
 def update(request, todo_id):
     if request.method == "POST":
         # todo = Todo.objects.get(pk=todo_id)
