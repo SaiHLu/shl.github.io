@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-center mt-3">Todo Tasks</h1>
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Task</th>
+      <th scope="col">Creater</th>
+      <th scope="col">Date</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for todo in todos.all %}
+    <tr>
+      <td>{{todo.name}}</td>
+      <td>{{todo.creater}}</td>
+      <td>{{todo.pretty_date}}</td>
+      <td><a href="{% url 'edit' todo.id %}" class="btn btn-warning btn-block">Edit</a></td>
+      <td><a href="javascript:{document.getElementById('del').submit()}" class="btn btn-danger btn-block">Delete</a></td>
+      <form action="{% url 'delete_task' todo.id %}" method="post" id="del">
+        {% csrf_token %}
+        <input type="hidden">
+      </form>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

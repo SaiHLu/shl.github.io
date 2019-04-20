@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Create Todo
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Update A Task</h1>
+
+<form action="{% url 'update' todo.id %}" method="post">
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" name="name" placeholder="Todo's Name" value="{{ todo.name }}">
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-block">Update</button>
+
+</form>
+{% endblock %}
